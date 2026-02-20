@@ -9,6 +9,10 @@ const ConfigSchema = z.object({
     secretKey: z.string().optional(),
   }),
   server: z.object({
+    transport: z.enum(['stdio', 'http']).default('stdio'),
+    httpHost: z.string().min(1).default('0.0.0.0'),
+    httpPort: z.number().int().min(1).max(65535).default(3000),
+    httpPath: z.string().min(1).default('/mcp'),
     rateLimit: z.number().min(1).default(100),
     timeout: z.number().min(1000).default(30000),
     logLevel: z.enum(['error', 'warn', 'info', 'debug']).default('info'),
@@ -24,6 +28,10 @@ export function loadConfig(): Config {
       secretKey: process.env.ESPOCRM_SECRET_KEY,
     },
     server: {
+      transport: process.env.MCP_TRANSPORT || 'stdio',
+      httpHost: process.env.MCP_HTTP_HOST || '0.0.0.0',
+      httpPort: parseInt(process.env.MCP_HTTP_PORT || '3000'),
+      httpPath: process.env.MCP_HTTP_PATH || '/mcp',
       rateLimit: parseInt(process.env.RATE_LIMIT || '100'),
       timeout: parseInt(process.env.REQUEST_TIMEOUT || '30000'),
       logLevel: process.env.LOG_LEVEL || 'info',
@@ -62,6 +70,21 @@ export function validateConfiguration(): string[] {
   
   if (process.env.ESPOCRM_AUTH_METHOD === 'hmac' && !process.env.ESPOCRM_SECRET_KEY) {
     errors.push("ESPOCRM_SECRET_KEY is required when using HMAC authentication");
+  }
+
+  if (process.env.MCP_TRANSPORT && !['stdio', 'http'].includes(process.env.MCP_TRANSPORT)) {
+    errors.push("MCP_TRANSPORT must be either 'stdio' or 'http'");
+  }
+
+  if (process.env.MCP_HTTP_PORT) {
+    const port = parseInt(process.env.MCP_HTTP_PORT, 10);
+    if (!Number.isInteger(port) || port < 1 || port > 65535) {
+      errors.push("MCP_HTTP_PORT must be a valid port between 1 and 65535");
+    }
+  }
+
+  if (process.env.MCP_HTTP_PATH && !process.env.MCP_HTTP_PATH.startsWith('/')) {
+    errors.push("MCP_HTTP_PATH must start with '/' (e.g. /mcp)");
   }
   
   return errors;

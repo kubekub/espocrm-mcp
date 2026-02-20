@@ -6,6 +6,10 @@ export interface EspoCRMConfig {
 }
 
 export interface ServerConfig {
+  transport: 'stdio' | 'http';
+  httpHost: string;
+  httpPort: number;
+  httpPath: string;
   rateLimit: number;
   timeout: number;
   logLevel: string;

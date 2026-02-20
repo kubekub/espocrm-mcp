@@ -135,6 +135,9 @@ ESPOCRM_AUTH_METHOD=apikey
 
 # Server Configuration (Optional)
 MCP_TRANSPORT=stdio
+MCP_HTTP_HOST=0.0.0.0
+MCP_HTTP_PORT=3000
+MCP_HTTP_PATH=/mcp
 RATE_LIMIT=100
 REQUEST_TIMEOUT=30000
 LOG_LEVEL=info
@@ -149,9 +152,27 @@ LOG_LEVEL=info
 | `ESPOCRM_AUTH_METHOD` | Authentication method (`apikey` or `hmac`) | Yes | `apikey` |
 | `ESPOCRM_SECRET_KEY` | Secret key for HMAC auth | No | - |
 | `MCP_TRANSPORT` | MCP transport method | No | `stdio` |
+| `MCP_HTTP_HOST` | Host interface when `MCP_TRANSPORT=http` | No | `0.0.0.0` |
+| `MCP_HTTP_PORT` | HTTP port when `MCP_TRANSPORT=http` | No | `3000` |
+| `MCP_HTTP_PATH` | HTTP endpoint path when `MCP_TRANSPORT=http` | No | `/mcp` |
 | `RATE_LIMIT` | Requests per minute limit | No | `100` |
 | `REQUEST_TIMEOUT` | Request timeout in milliseconds | No | `30000` |
 | `LOG_LEVEL` | Logging level | No | `info` |
+
+### MCP Transport Modes
+
+- `MCP_TRANSPORT=stdio`: Standard local MCP process transport (default).
+- `MCP_TRANSPORT=http`: Streamable HTTP MCP transport using `MCP_HTTP_HOST`, `MCP_HTTP_PORT`, and `MCP_HTTP_PATH`.
+
+Example HTTP mode:
+
+```bash
+MCP_TRANSPORT=http \
+MCP_HTTP_HOST=0.0.0.0 \
+MCP_HTTP_PORT=3000 \
+MCP_HTTP_PATH=/mcp \
+npm start
+```
 
 ## Available Tools
 
