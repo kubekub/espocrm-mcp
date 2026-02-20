@@ -41,7 +41,7 @@ LOG_LEVEL=info
 ### MCP Transport Modes
 
 - `MCP_TRANSPORT=stdio`: Standard local MCP process transport (default).
-- `MCP_TRANSPORT=http`: Streamable HTTP MCP transport using `MCP_HTTP_HOST`, `MCP_HTTP_PORT`, and `MCP_HTTP_PATH`.
+- `MCP_TRANSPORT=streamable-http`: Streamable HTTP MCP transport using `MCP_HTTP_HOST`, `MCP_HTTP_PORT`, and `MCP_HTTP_PATH`.
 
 ## Running the Server
 
@@ -52,7 +52,7 @@ npm start
 
 ### HTTP Transport (Streamable HTTP)
 ```bash
-MCP_TRANSPORT=http \
+MCP_TRANSPORT=streamable-http \
 MCP_HTTP_HOST=0.0.0.0 \
 MCP_HTTP_PORT=3000 \
 MCP_HTTP_PATH=/mcp \

@@ -194,7 +194,7 @@ async function main() {
       rateLimit: config.server.rateLimit 
     });
     
-    if (config.server.transport === 'http') {
+    if (config.server.transport === 'streamable-http') {
       logger.info('Starting MCP server with streamable HTTP transport', {
         host: config.server.httpHost,
         port: config.server.httpPort,

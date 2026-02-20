@@ -9,7 +9,7 @@ const ConfigSchema = z.object({
     secretKey: z.string().optional(),
   }),
   server: z.object({
-    transport: z.enum(['stdio', 'http']).default('stdio'),
+    transport: z.enum(['stdio', 'streamable-http']).default('stdio'),
     httpHost: z.string().min(1).default('0.0.0.0'),
     httpPort: z.number().int().min(1).max(65535).default(3000),
     httpPath: z.string().min(1).default('/mcp'),
@@ -72,8 +72,8 @@ export function validateConfiguration(): string[] {
     errors.push("ESPOCRM_SECRET_KEY is required when using HMAC authentication");
   }
 
-  if (process.env.MCP_TRANSPORT && !['stdio', 'http'].includes(process.env.MCP_TRANSPORT)) {
-    errors.push("MCP_TRANSPORT must be either 'stdio' or 'http'");
+  if (process.env.MCP_TRANSPORT && !['stdio', 'streamable-http'].includes(process.env.MCP_TRANSPORT)) {
+    errors.push("MCP_TRANSPORT must be either 'stdio' or 'streamable-http'");
   }
 
   if (process.env.MCP_HTTP_PORT) {

@@ -39,3 +39,6 @@ pids/
 # Temporary files
 tmp/
 temp/
+
+# Local helper scripts
+.docker-build-push.sh

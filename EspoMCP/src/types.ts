@@ -6,7 +6,7 @@ export interface EspoCRMConfig {
 }
 
 export interface ServerConfig {
-  transport: 'stdio' | 'http';
+  transport: 'stdio' | 'streamable-http';
   httpHost: string;
   httpPort: number;
   httpPath: string;
